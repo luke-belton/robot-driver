@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyRobot", "ToyRobot\ToyRobot.csproj", "{834EE564-7D4E-4318-9AB2-A611187BEFAC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{834EE564-7D4E-4318-9AB2-A611187BEFAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{834EE564-7D4E-4318-9AB2-A611187BEFAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{834EE564-7D4E-4318-9AB2-A611187BEFAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{834EE564-7D4E-4318-9AB2-A611187BEFAC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E70106FA-C6FA-4110-95F3-D9304EB7622E}
+	EndGlobalSection
+EndGlobal
