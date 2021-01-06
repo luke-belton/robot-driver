@@ -1,4 +1,5 @@
 ﻿using System;
+using ToyRobotSimulator.Exceptions;
 using ToyRobotSimulator.Helpers;
 using ToyRobotSimulator.Models;
 
@@ -14,9 +15,25 @@ namespace ToyRobotSimulator
             var robot = new ToyRobot();
             while (true)
             {
-                var rawCommand = Console.ReadLine();
-                var command = commandManager.GetCommandFromInput(rawCommand);
-                robot = controller.ExecuteSingleCommand(command, robot);
+                try
+                {
+                    var rawCommand = Console.ReadLine();
+                    var command = commandManager.GetCommandFromInput(rawCommand);
+                    robot = controller.ExecuteSingleCommand(command, robot);
+                }
+                catch (RobotCommandException ex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(ex.Message);
+                    Console.ResetColor();
+                }
+                catch
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Something went really wrong with the Robot - oops!");
+                    Console.ResetColor();
+                    break;
+                }
             }
         }
     }
