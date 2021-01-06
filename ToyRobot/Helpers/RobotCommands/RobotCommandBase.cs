@@ -3,7 +3,11 @@ using ToyRobotSimulator.Models;
 
 namespace ToyRobotSimulator.Helpers.RobotCommands
 {
-    public abstract class RobotCommandBase<TRobot> where TRobot : IRobot
+    public interface IRobotCommand<TRobot> where TRobot : IRobot
+    {
+        public TRobot Execute(TRobot robot, Table table);
+    }
+    public abstract class RobotCommandBase<TRobot> : IRobotCommand<TRobot> where TRobot : IRobot
     {
         protected virtual bool ValidateCommand(TRobot robot, Table table, out string validationFailureMessage)
         {
