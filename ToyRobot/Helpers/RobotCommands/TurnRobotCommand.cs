@@ -7,7 +7,7 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
 {
     public class TurnRobotCommand<TRobot> : RobotCommandBase<TRobot> where TRobot : IRobot
     {
-        private readonly TurnDirection _turnDirection;
+        public TurnDirection TurnDirection { get; }
 
         private readonly List<CompassDirection> orderedCompassDirections = new List<CompassDirection>
         {
@@ -19,12 +19,12 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
 
         public TurnRobotCommand(TurnDirection turnDirection)
         {
-            _turnDirection = turnDirection;
+            TurnDirection = turnDirection;
         }
 
         protected override TRobot ExecuteCommand(TRobot robot, Table table)
         {
-            robot.Facing = GetNewDirection(_turnDirection, robot.Facing);
+            robot.Facing = GetNewDirection(TurnDirection, robot.Facing);
             return robot;
         }
 

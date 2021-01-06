@@ -5,20 +5,21 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
 {
     public class PlaceRobotCommand<TRobot> : RobotCommandBase<TRobot> where TRobot : IRobot
     {
-        private readonly int _x;
-        private readonly int _y;
-        private readonly CompassDirection _facing;
+        public int XPlacement { get; }
+        public int YPlacement { get; }
+        public CompassDirection Facing { get; }
+
         public PlaceRobotCommand(int x, int y, CompassDirection facing)
         {
-            _x = x;
-            _y = y;
-            _facing = facing;
+            XPlacement = x;
+            YPlacement = y;
+            Facing = facing;
         }
 
         protected override bool ValidateCommand(TRobot robot, Table table, out string validationFailureMessage)
         {
             validationFailureMessage = null;
-            if (table.ContainsCoordinate(_x, _y)) return true;
+            if (table.ContainsCoordinate(XPlacement, YPlacement)) return true;
 
             validationFailureMessage = $"Cannot place {typeof(TRobot).Name} outside {nameof(Table)}";
             return false;
@@ -27,8 +28,8 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
 
         protected override TRobot ExecuteCommand(TRobot robot, Table table)
         {
-            robot.Facing = _facing;
-            robot.Position = new RobotPosition { X = _x, Y = _y };
+            robot.Facing = Facing;
+            robot.Position = new RobotPosition { X = XPlacement, Y = YPlacement };
 
             return robot;
         }
