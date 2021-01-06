@@ -30,6 +30,7 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
         {
             robot.Facing = Facing;
             robot.Position = new RobotPosition { X = XPlacement, Y = YPlacement };
+            robot.IsPlaced = true;
 
             return robot;
         }

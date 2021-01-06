@@ -49,6 +49,7 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
                         robotPosition.X.Equals(2) && robotPosition.Y.Equals(3)),
                 Times.Once);
             _robot.VerifySet(r => r.Facing = CompassDirection.North, Times.Once);
+            _robot.VerifySet(r => r.IsPlaced = true, Times.Once);
         }
     }
 }
