@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using FluentAssertions;
 using Moq;
 using ToyRobotSimulator.Constants;
+using ToyRobotSimulator.Exceptions;
 using ToyRobotSimulator.Helpers.RobotCommands;
 using ToyRobotSimulator.Models;
 using Xunit;
@@ -50,6 +52,38 @@ namespace ToyRobotSimulator.Helpers
             var result = _sut.ExecuteCommands(_robot.Object);
 
             result.Should().BeEquivalentTo(robotAfterCommands);
+            _robotCommand.Verify(r => r.Execute(It.IsAny<IRobot>(), It.IsAny<Table>()), Times.Once);
+        }
+
+        [Fact]
+        public void ExecuteCommands_WritesMessageWhenCommandFails()
+        {
+            _sut.AddCommand(_robotCommand.Object);
+            _robotCommand.Setup(r => r.Execute(It.IsAny<IRobot>(), It.IsAny<Table>())).Throws(new RobotCommandException("we failed"));
+
+            // method suggested at https://stackoverflow.com/questions/2139274/grabbing-the-output-sent-to-console-out-from-within-a-unit-test
+            using var sw = new StringWriter();
+            Console.SetOut(sw);
+
+            var _ = _sut.ExecuteCommands(_robot.Object);
+            var expected = $"we failed{Environment.NewLine}";
+            sw.ToString().Should().Be(expected);
+        }
+
+        [Fact]
+        public void ExecuteSingleCommand_ExecutesCommand()
+        {
+            var robotAfterCommand = new ToyRobot
+            {
+                Facing = CompassDirection.North,
+                IsPlaced = true,
+                Position = new RobotPosition { X = 100, Y = 50 }
+            };
+
+            _robotCommand.Setup(r => r.Execute(It.IsAny<IRobot>(), It.IsAny<Table>())).Returns(robotAfterCommand);
+            var result = _sut.ExecuteSingleCommand(_robotCommand.Object, _robot.Object);
+
+            result.Should().BeEquivalentTo(robotAfterCommand);
             _robotCommand.Verify(r => r.Execute(It.IsAny<IRobot>(), It.IsAny<Table>()), Times.Once);
         }
     }
