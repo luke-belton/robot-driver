@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FluentAssertions;
-using Moq;
+﻿using Moq;
 using ToyRobotSimulator.Constants;
 using ToyRobotSimulator.Exceptions;
 using ToyRobotSimulator.Models;

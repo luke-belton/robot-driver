@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ToyRobotSimulator.Constants
+﻿namespace ToyRobotSimulator.Constants
 {
     public static class Commands
     {

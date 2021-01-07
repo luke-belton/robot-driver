@@ -39,7 +39,12 @@ namespace ToyRobotSimulator.Models
 
         public CompassDirection Facing { get; set; }
 
-        public void ReportPosition() => Console.WriteLine(ToString());
+        public void ReportPosition()
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine(ToString());
+            Console.ResetColor();
+        }
 
         public override string ToString()
         {
