@@ -7,5 +7,6 @@
         public const string Left = "LEFT";
         public const string Right = "RIGHT";
         public const string Report = "REPORT";
+        public const string File = "FILE";
     }
 }

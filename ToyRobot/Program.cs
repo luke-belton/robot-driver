@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
+using ToyRobotSimulator.Constants;
 using ToyRobotSimulator.Exceptions;
 using ToyRobotSimulator.Helpers;
 using ToyRobotSimulator.Models;
@@ -19,8 +22,34 @@ namespace ToyRobotSimulator
                 {
                     Console.WriteLine("Give the robot its next command: ");
                     var rawCommand = Console.ReadLine();
-                    var command = commandManager.GetCommandFromInput(rawCommand);
-                    robot = controller.ExecuteSingleCommand(command, robot);
+                    if (rawCommand != null && rawCommand.StartsWith(Commands.File))
+                    {
+                        var filePath = rawCommand.Split(" ").ElementAtOrDefault(1);
+                        if (string.IsNullOrEmpty(filePath))
+                        {
+                            throw new RobotCommandException($"No filepath supplied with {Commands.File} command");
+                        }
+
+                        var rawCommands = commandManager.GetCommandsFromFile(filePath);
+                        foreach (var command in rawCommands)
+                        {
+                            controller.AddCommand(command);
+                        }
+
+                        controller.ExecuteCommands(robot);
+                        controller.ClearCommands();
+                    }
+                    else
+                    {
+                        var command = commandManager.GetCommandFromInput(rawCommand);
+                        robot = controller.ExecuteSingleCommand(command, robot);
+                    }
+                }
+                catch (FileNotFoundException ex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(ex.Message);
+                    Console.ResetColor();
                 }
                 catch (RobotCommandException ex)
                 {
@@ -51,6 +80,12 @@ This Robot accepts the following instructions...
         RIGHT - to turn robot to the right by 90 degrees
         REPORT - to report current position of robot in X,Y,F format as for PLACE command
 
+You can upload a batch of instructions from a .txt file using the following method:
+        
+        FILE \path\to\file.txt
+
+    ... each command must be given as above, with each command appearing on a new line.
+    
 The table is a 5 by 5 grid with origin at X=0, Y=0.
 The first valid command is PLACE (any other command is ignored)
 Any move that would position the robot off the table is ignored.

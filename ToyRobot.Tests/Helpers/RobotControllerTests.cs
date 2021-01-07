@@ -35,6 +35,15 @@ namespace ToyRobotSimulator.Helpers
         }
 
         [Fact]
+        public void ClearCommand_AddsCommandToList()
+        {
+            _sut.AddCommand(_robotCommand.Object);
+            _sut.Commands.Count.Should().Be(1);
+            _sut.ClearCommands();
+            _sut.Commands.Count.Should().Be(0);
+        }
+
+        [Fact]
         public void ExecuteCommands_CallsExecute()
         {
             var robotAfterCommands = new ToyRobot

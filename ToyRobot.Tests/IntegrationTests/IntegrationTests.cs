@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Windows.Input;
 using FluentAssertions;
 using ToyRobotSimulator.Constants;
 using ToyRobotSimulator.Helpers;

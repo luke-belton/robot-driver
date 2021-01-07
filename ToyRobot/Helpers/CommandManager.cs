@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ToyRobotSimulator.Constants;
 using ToyRobotSimulator.Exceptions;
@@ -16,6 +17,14 @@ namespace ToyRobotSimulator.Helpers
         /// <returns>An implementation of <see cref="IRobotCommand{TRobot}"/> depending on input</returns>
         /// <exception cref="RobotCommandException"> thrown when a problem is encountered with the supplied input.</exception>
         public IRobotCommand<TRobot> GetCommandFromInput(string inputCommand);
+
+        /// <summary>
+        /// Parse text file to list of robot commands
+        /// </summary>
+        /// <param name="filePath">Path to text file containing commands</param>
+        /// <returns>An implementation of <see cref="IRobotCommand{TRobot}"/> depending on input</returns>
+        /// <exception cref="RobotCommandException"> thrown when a problem is encountered with the supplied commands.</exception>
+        public List<IRobotCommand<TRobot>> GetCommandsFromFile(string filePath);
     }
     public class CommandManager<TRobot> : ICommandManager<TRobot> where TRobot : IRobot
     {
@@ -50,6 +59,20 @@ namespace ToyRobotSimulator.Helpers
                 default:
                     throw new RobotCommandException($"The command `{command.First()}` is not recognised as a valid command.");
             }
+        }
+
+        public List<IRobotCommand<TRobot>> GetCommandsFromFile(string filePath)
+        {
+            var file = new System.IO.StreamReader(filePath);
+            string line;
+            var commands = new List<IRobotCommand<TRobot>>();
+            while ((line = file.ReadLine()) != null)
+            {
+                commands.Add(GetCommandFromInput(line));
+            }
+            file.Close();
+
+            return commands;
         }
 
         private void CheckSingleCommand(string[] commands)

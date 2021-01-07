@@ -14,6 +14,8 @@ namespace ToyRobotSimulator.Helpers
 
         public void AddCommand<TCommand>(TCommand command) where TCommand : IRobotCommand<TRobot>;
 
+        public void ClearCommands();
+
         public TRobot ExecuteCommands(TRobot robot);
 
         public TRobot ExecuteSingleCommand<TCommand>(TCommand command, TRobot robot)
@@ -34,6 +36,11 @@ namespace ToyRobotSimulator.Helpers
         public void AddCommand<TCommand>(TCommand command) where TCommand : IRobotCommand<TRobot>
         {
             Commands.Add(command);
+        }
+
+        public void ClearCommands()
+        {
+            Commands.Clear();
         }
 
         public TRobot ExecuteCommands(TRobot robot)

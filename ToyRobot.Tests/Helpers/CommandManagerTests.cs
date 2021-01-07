@@ -1,4 +1,6 @@
-﻿using FluentAssertions;
+﻿using System.IO;
+using System.Linq;
+using FluentAssertions;
 using ToyRobotSimulator.Constants;
 using ToyRobotSimulator.Exceptions;
 using ToyRobotSimulator.Helpers.RobotCommands;
@@ -59,6 +61,20 @@ namespace ToyRobotSimulator.Helpers
             var command = _sut.GetCommandFromInput(Commands.Report);
 
             command.Should().BeOfType<ReportRobotCommand<IRobot>>();
+        }
+
+        [Fact]
+        public void GetCommandsFromFile_CorrectlyReturnsCommands()
+        {
+            var directory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            var commands = _sut.GetCommandsFromFile(Path.Combine(new string[]
+            {
+                directory, "Resources", "Commands.txt"
+            }));
+            commands.Count.Should().Be(4);
+            commands.Count(c => c.GetType() == typeof(PlaceRobotCommand<IRobot>)).Should().Be(1);
+            commands.Count(c => c.GetType() == typeof(MoveRobotCommand<IRobot>)).Should().Be(2);
+            commands.Count(c => c.GetType() == typeof(ReportRobotCommand<IRobot>)).Should().Be(1);
         }
 
         [Fact]
