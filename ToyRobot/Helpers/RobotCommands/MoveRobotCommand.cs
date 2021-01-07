@@ -6,6 +6,12 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
 {
     public class MoveRobotCommand<TRobot> : RobotCommandBase<TRobot> where TRobot : IRobot
     {
+        /// <summary>
+        /// Move a <see cref="IRobot"/> forward one place on the table.
+        /// Robot will not move if position is valid.
+        /// </summary>
+        public MoveRobotCommand() { }
+
         protected override bool ValidateCommand(TRobot robot, Table table, out string validationFailureMessage)
         {
             validationFailureMessage = null;

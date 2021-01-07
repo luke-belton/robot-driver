@@ -9,6 +9,12 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
         public int YPlacement { get; }
         public CompassDirection Facing { get; }
 
+        /// <summary>
+        /// Place an <see cref="IRobot"/> on a table. Robot will not be placed if position is outside table.
+        /// </summary>
+        /// <param name="x">X position</param>
+        /// <param name="y">Y position</param>
+        /// <param name="facing">Facing direction</param>
         public PlaceRobotCommand(int x, int y, CompassDirection facing)
         {
             XPlacement = x;

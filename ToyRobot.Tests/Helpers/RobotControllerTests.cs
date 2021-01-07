@@ -48,18 +48,18 @@ namespace ToyRobotSimulator.Helpers
             };
 
             _sut.AddCommand(_robotCommand.Object);
-            _robotCommand.Setup(r => r.Execute(It.IsAny<IRobot>(), It.IsAny<Table>())).Returns(robotAfterCommands);
+            _robotCommand.Setup(r => r.ValidateAndExecute(It.IsAny<IRobot>(), It.IsAny<Table>())).Returns(robotAfterCommands);
             var result = _sut.ExecuteCommands(_robot.Object);
 
             result.Should().BeEquivalentTo(robotAfterCommands);
-            _robotCommand.Verify(r => r.Execute(It.IsAny<IRobot>(), It.IsAny<Table>()), Times.Once);
+            _robotCommand.Verify(r => r.ValidateAndExecute(It.IsAny<IRobot>(), It.IsAny<Table>()), Times.Once);
         }
 
         [Fact]
         public void ExecuteCommands_WritesMessageWhenCommandFails()
         {
             _sut.AddCommand(_robotCommand.Object);
-            _robotCommand.Setup(r => r.Execute(It.IsAny<IRobot>(), It.IsAny<Table>())).Throws(new RobotCommandException("we failed"));
+            _robotCommand.Setup(r => r.ValidateAndExecute(It.IsAny<IRobot>(), It.IsAny<Table>())).Throws(new RobotCommandException("we failed"));
 
             // method suggested at https://stackoverflow.com/questions/2139274/grabbing-the-output-sent-to-console-out-from-within-a-unit-test
             using var sw = new StringWriter();
@@ -80,11 +80,11 @@ namespace ToyRobotSimulator.Helpers
                 Position = new RobotPosition { X = 100, Y = 50 }
             };
 
-            _robotCommand.Setup(r => r.Execute(It.IsAny<IRobot>(), It.IsAny<Table>())).Returns(robotAfterCommand);
+            _robotCommand.Setup(r => r.ValidateAndExecute(It.IsAny<IRobot>(), It.IsAny<Table>())).Returns(robotAfterCommand);
             var result = _sut.ExecuteSingleCommand(_robotCommand.Object, _robot.Object);
 
             result.Should().BeEquivalentTo(robotAfterCommand);
-            _robotCommand.Verify(r => r.Execute(It.IsAny<IRobot>(), It.IsAny<Table>()), Times.Once);
+            _robotCommand.Verify(r => r.ValidateAndExecute(It.IsAny<IRobot>(), It.IsAny<Table>()), Times.Once);
         }
     }
 }

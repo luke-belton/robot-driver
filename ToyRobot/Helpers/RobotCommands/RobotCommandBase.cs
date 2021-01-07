@@ -5,7 +5,14 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
 {
     public interface IRobotCommand<TRobot> where TRobot : IRobot
     {
-        public TRobot Execute(TRobot robot, Table table);
+        /// <summary>
+        /// Validates command for given robot and if valid, executes it
+        /// </summary>
+        /// <param name="robot">A <see cref="IRobot"/> implementation</param>
+        /// <param name="table">A <see cref="Table"/></param>
+        /// <returns>The <see cref="IRobot"/> after completing the supplied command</returns>
+        /// <exception cref="RobotCommandException">Thrown when validation of the command fails. Exception message will contain a description of the error.</exception>
+        public TRobot ValidateAndExecute(TRobot robot, Table table);
     }
     public abstract class RobotCommandBase<TRobot> : IRobotCommand<TRobot> where TRobot : IRobot
     {
@@ -18,7 +25,7 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
             return false;
         }
 
-        public TRobot Execute(TRobot robot, Table table)
+        public TRobot ValidateAndExecute(TRobot robot, Table table)
         {
             if (!ValidateCommand(robot, table, out var validationFailureMessage))
             {

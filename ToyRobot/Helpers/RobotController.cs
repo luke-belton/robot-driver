@@ -42,7 +42,7 @@ namespace ToyRobotSimulator.Helpers
             {
                 try
                 {
-                    robot = command.Execute(robot, Table);
+                    robot = command.ValidateAndExecute(robot, Table);
                 }
                 catch (RobotCommandException ex)
                 {
@@ -56,7 +56,7 @@ namespace ToyRobotSimulator.Helpers
         public TRobot ExecuteSingleCommand<TCommand>(TCommand command, TRobot robot)
             where TCommand : IRobotCommand<TRobot>
         {
-            robot = command.Execute(robot, Table);
+            robot = command.ValidateAndExecute(robot, Table);
             return robot;
         }
     }

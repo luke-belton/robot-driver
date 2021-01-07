@@ -27,7 +27,7 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
             _robot.SetupGet(r => r.IsPlaced).Returns(false);
             var command = new MoveRobotCommand<IRobot>();
 
-            Assert.Throws<RobotCommandException>(() => command.Execute(_robot.Object, _table));
+            Assert.Throws<RobotCommandException>(() => command.ValidateAndExecute(_robot.Object, _table));
         }
 
         [Fact]
@@ -36,7 +36,7 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
             _robot.SetupGet(r => r.IsPlaced).Returns(false);
             var command = new MoveRobotCommand<IRobot>();
 
-            Assert.Throws<RobotCommandException>(() => command.Execute(_robot.Object, _table));
+            Assert.Throws<RobotCommandException>(() => command.ValidateAndExecute(_robot.Object, _table));
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
             _robot.SetupGet(r => r.Facing).Returns(CompassDirection.North);
             var command = new MoveRobotCommand<IRobot>();
 
-            Assert.Throws<RobotCommandException>(() => command.Execute(_robot.Object, _table));
+            Assert.Throws<RobotCommandException>(() => command.ValidateAndExecute(_robot.Object, _table));
         }
 
         [ClassData(typeof(Execute_MovesRobotToNextPosition_TestsData))]
@@ -60,7 +60,7 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
 
             var command = new MoveRobotCommand<IRobot>();
 
-            command.Execute(_robot.Object, _table);
+            command.ValidateAndExecute(_robot.Object, _table);
             _robot.VerifySet(r => r.Position = It.Is<RobotPosition>(robotPosition => robotPosition.X.Equals(expectedNextPosition.X) && robotPosition.Y.Equals(expectedNextPosition.Y)), Times.Once());
         }
 

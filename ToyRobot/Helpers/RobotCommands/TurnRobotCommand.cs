@@ -17,6 +17,10 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
             CompassDirection.West,
         };
 
+        /// <summary>
+        /// Turns the <see cref="IRobot"/> in the specified direction on the table. Ignored if robot is not placed.
+        /// </summary>
+        /// <param name="turnDirection"></param>
         public TurnRobotCommand(TurnDirection turnDirection)
         {
             TurnDirection = turnDirection;

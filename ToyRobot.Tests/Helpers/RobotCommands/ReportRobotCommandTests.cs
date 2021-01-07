@@ -25,7 +25,7 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
             _robot.SetupGet(r => r.IsPlaced).Returns(false);
             var command = new ReportRobotCommand<IRobot>();
 
-            Assert.Throws<RobotCommandException>(() => command.Execute(_robot.Object, _table));
+            Assert.Throws<RobotCommandException>(() => command.ValidateAndExecute(_robot.Object, _table));
         }
 
         [Fact]
@@ -34,7 +34,7 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
             _robot.SetupGet(r => r.IsPlaced).Returns(true);
             var command = new ReportRobotCommand<IRobot>();
 
-            command.Execute(_robot.Object, _table);
+            command.ValidateAndExecute(_robot.Object, _table);
             _robot.Verify(r => r.ReportPosition(), Times.Once);
         }
     }

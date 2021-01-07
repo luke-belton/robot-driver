@@ -26,7 +26,7 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
             _robot.SetupGet(r => r.IsPlaced).Returns(false);
             var command = new TurnRobotCommand<IRobot>(TurnDirection.Left);
 
-            Assert.Throws<RobotCommandException>(() => command.Execute(_robot.Object, _table));
+            Assert.Throws<RobotCommandException>(() => command.ValidateAndExecute(_robot.Object, _table));
         }
 
         [InlineData(CompassDirection.North, CompassDirection.West, TurnDirection.Left)]
@@ -44,7 +44,7 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
             var command = new TurnRobotCommand<IRobot>(turnDirection);
 
             _robot.SetupGet(r => r.Facing).Returns(currentFacing);
-            command.Execute(_robot.Object, _table);
+            command.ValidateAndExecute(_robot.Object, _table);
             _robot.VerifySet(r => r.Facing = expectedFacing);
         }
     }

@@ -11,6 +11,12 @@ namespace ToyRobotSimulator.Helpers
 {
     public interface ICommandManager<TRobot> where TRobot : IRobot
     {
+        /// <summary>
+        /// Parse input string to a command
+        /// </summary>
+        /// <param name="inputCommand"></param>
+        /// <returns>An implementation of <see cref="IRobotCommand{TRobot}"/> depending on input</returns>
+        /// <exception cref="RobotCommandException"> thrown when a problem is encountered with the supplied input.</exception>
         public IRobotCommand<TRobot> GetCommandFromInput(string inputCommand);
     }
     public class CommandManager<TRobot> : ICommandManager<TRobot> where TRobot : IRobot

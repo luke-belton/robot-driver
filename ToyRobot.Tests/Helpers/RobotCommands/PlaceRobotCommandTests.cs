@@ -26,7 +26,7 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
         {
             var command = new PlaceRobotCommand<IRobot>(10, 20, CompassDirection.North);
 
-            Assert.Throws<RobotCommandException>(() => command.Execute(_robot.Object, _table));
+            Assert.Throws<RobotCommandException>(() => command.ValidateAndExecute(_robot.Object, _table));
         }
 
         [Fact]
@@ -34,7 +34,7 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
         {
             var command = new PlaceRobotCommand<IRobot>(-1, -1, CompassDirection.North);
 
-            Assert.Throws<RobotCommandException>(() => command.Execute(_robot.Object, _table));
+            Assert.Throws<RobotCommandException>(() => command.ValidateAndExecute(_robot.Object, _table));
         }
 
         [Fact]
@@ -42,7 +42,7 @@ namespace ToyRobotSimulator.Helpers.RobotCommands
         {
             var command = new PlaceRobotCommand<IRobot>(2, 3, CompassDirection.North);
 
-            command.Execute(_robot.Object, _table);
+            command.ValidateAndExecute(_robot.Object, _table);
 
             _robot.VerifySet(r =>
                     r.Position = It.Is<RobotPosition>(robotPosition =>
